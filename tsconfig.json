@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "es2019",
+      "dom",
+      "dom.iterable"
+    ],
+    "jsx": "react",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@figma",
+      "./@types"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  }
+}

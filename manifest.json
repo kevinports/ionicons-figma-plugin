@@ -1,0 +1,7 @@
+{
+  "name": "Ionicons",
+  "id": "867959338325369707",
+  "api": "1.0.0",
+  "main": "dist/plugin.js",
+  "ui": "dist/ui.html"
+}

@@ -1,0 +1,146 @@
+:root {
+  --border-default: #E5E5E5;
+  --selected: #27A2F8;
+  --bg-highlight: #F0F0F0;
+  --text-dark: #001A3A;
+  --text-light: #92A0B3;
+}
+
+body {
+  font: 12px sans-serif;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.App {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+}
+
+.Control {
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.SearchBar {
+  margin: 0 16px 16px;
+  position: relative;
+}
+
+.SearchBar-search,
+.SearchBar-close {
+  color: var(--text-light);
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.SearchBar-search {
+  left: 6px;
+  width: 14px;
+  height: 14px;
+}
+
+.SearchBar-close {
+  transition: 0.2s all;
+  width: 16px;
+  height: 16px;
+  right: 2px;
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.SearchBar-close:hover {
+  color: var(--text-dark);
+}
+
+.SearchBar-close.is-active  {
+  opacity: 1;
+  pointer-events: initial;
+}
+
+.SearchBar input {
+  width: 100%;
+  padding: 6px 24px;
+  border: 0;
+  border-radius: 1px;
+  outline: none;
+  box-shadow: 0px 0px 0px 1px var(--border-default);
+}
+
+.SearchBar input:focus {
+  box-shadow: 0px 0px 0px 2px var(--selected);
+}
+
+.Filter {
+  display: flex;
+  padding: 16px;
+}
+
+.Filter-item {
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.Filter-item.is-active {
+  color: var(--text-dark);
+  pointer-events: none;
+}
+
+.Filter-item + .Filter-item {
+  margin-left: 16px;
+}
+
+.Detail {
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.IconList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 8px;
+}
+
+.IconList--empty {
+  text-align: center;
+  padding-top: 32px;
+}
+
+.Icon {
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s background-color;
+  border-radius: 6px;
+  z-index: 0;
+}
+
+.Icon:hover {
+  box-shadow: 0px 8px 16px rgba(2, 8, 20, 0.08), 0px 4px 8px rgba(2, 8, 20, 0.08);
+  z-index: 10;
+}
+
+.Icon.is-selected {
+  background-color: var(--bg-highlight);
+}
+
+.Icon-handler {
+  padding: 8px 0;
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Icon svg {
+  width: 24px;
+  height: 24px;
+}
