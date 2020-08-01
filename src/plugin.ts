@@ -56,7 +56,6 @@ figma.ui.onmessage = (msg:Message) => {
 
     // Select the rectangle
     figma.currentPage.selection = [node];
-
   }
 
 };

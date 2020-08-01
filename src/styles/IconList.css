@@ -1,0 +1,10 @@
+.IconList {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 8px;
+}
+
+.IconList--empty {
+  text-align: center;
+  padding-top: 32px;
+}

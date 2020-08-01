@@ -1,3 +1,4 @@
+export * from './App';
 export * from './Icon';
 export * from './IconList';
 export * from './Filter';

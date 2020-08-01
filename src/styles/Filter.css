@@ -1,0 +1,20 @@
+.Filter {
+  display: flex;
+  padding: 16px;
+}
+
+.Filter-item {
+  text-transform: capitalize;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.Filter-item.is-active {
+  color: var(--text-dark);
+  pointer-events: none;
+}
+
+.Filter-item + .Filter-item {
+  margin-left: 16px;
+}

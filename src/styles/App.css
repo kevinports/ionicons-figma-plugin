@@ -1,0 +1,17 @@
+.App {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+}
+
+.App-control {
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.App-detail {
+  overflow-y: auto;
+  padding: 12px;
+}

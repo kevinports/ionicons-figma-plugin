@@ -1,3 +1,5 @@
 To build:
+```
   $ npm install
-  $ npx webpack
+  $ npm start
+```

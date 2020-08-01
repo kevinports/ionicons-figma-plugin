@@ -1,28 +1,44 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 interface props {
-  onChange:Function;
+  onValueChange: Function;
+  onInputFocusChange: Function;
+  doInputFocus: boolean;
 }
 
-export const Searchbar: React.SFC<props> = ({ onChange }) => {
+export const Searchbar: React.SFC<props> = ({ onValueChange, onInputFocusChange, doInputFocus }) => {
   const inputElement = useRef(null);
   const [value, setValue] = useState('');
 
   useEffect(() => {
-    inputElement.current.focus();
-  }, []);
+    if (doInputFocus) {
+      inputElement.current.focus();
+    } else {
+      inputElement.current.blur();
+    }
+  }, [doInputFocus]);
 
   const handleChange = (ev) => {
     const val = ev.target.value;
     setValue(val);
-    onChange(val);
+    onValueChange(val);
   }
 
   const handleClear = () => {
     const val = '';
     inputElement.current.value = val;
     setValue(val);
-    onChange(val);
+    onValueChange(val);
+  }
+
+  const handleFocus = (ev) => {
+    ev.preventDefault();
+    onInputFocusChange(true);
+  }
+
+  const handleBlur = (ev) => {
+    ev.preventDefault();
+    onInputFocusChange(false);
   }
 
   return (
@@ -35,6 +51,8 @@ export const Searchbar: React.SFC<props> = ({ onChange }) => {
         type="text"
         placeholder="Search icons..."
         ref={inputElement}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onChange={handleChange}/>
 
       <svg

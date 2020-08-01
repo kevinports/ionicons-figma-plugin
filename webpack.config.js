@@ -11,7 +11,7 @@ module.exports = (env, argv) => ({
   devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
   entry: {
-    ui: './src/app.tsx',
+    ui: './src/ui.tsx',
     plugin: './src/plugin.ts',
   },
 
