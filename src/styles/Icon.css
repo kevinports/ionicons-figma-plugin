@@ -4,15 +4,17 @@
   transition: 0.2s background-color;
   border-radius: 6px;
   z-index: 0;
+  cursor: grab;
+}
+
+.Icon.is-selected {
+  background-color: var(--bg-highlight);
 }
 
 .Icon:hover {
   box-shadow: 0px 8px 16px rgba(2, 8, 20, 0.08), 0px 4px 8px rgba(2, 8, 20, 0.08);
   z-index: 10;
-}
-
-.Icon.is-selected {
-  background-color: var(--bg-highlight);
+  background-color: #fff;
 }
 
 .Icon-handler {

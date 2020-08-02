@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Message } from '../declarations';
 
 interface props {
@@ -10,6 +10,7 @@ interface props {
 
 export const Icon: React.SFC<props> = ({ name, isSelected, onSelected }) => {
   const element = useRef(null);
+  const [isMouseDown, setMouseDown] = useState(false);
 
   const serialize = () => {
     const srcDim = 512;
@@ -102,11 +103,6 @@ export const Icon: React.SFC<props> = ({ name, isSelected, onSelected }) => {
     }
   }
 
-  const handleClick = (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
   useEffect(() => {
     if (isSelected) {
       onSelected(element.current);
@@ -128,11 +124,10 @@ export const Icon: React.SFC<props> = ({ name, isSelected, onSelected }) => {
   })
 
   return (
-    <div className={`Icon${isSelected ? ' is-selected' : ''}`}>
+    <div className={`Icon ${isSelected ? ' is-selected' : ''}`}>
       <div
         className="Icon-handler"
         ref={element}
-        onClick={handleClick}
         onDoubleClick={handleSelect}
         draggable="true">
         <svg>
