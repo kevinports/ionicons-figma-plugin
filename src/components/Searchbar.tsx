@@ -41,6 +41,12 @@ export const SearchBar: React.SFC<props> = ({ onValueChange, onInputFocusChange,
     onInputFocusChange(false);
   }
 
+  const handleKeyUp = (ev) => {
+    if (ev.key === 'Escape') {
+      handleClear();
+    }
+  }
+
   return (
     <div className="SearchBar">
       <svg className="SearchBar-search">
@@ -53,7 +59,8 @@ export const SearchBar: React.SFC<props> = ({ onValueChange, onInputFocusChange,
         ref={inputElement}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onChange={handleChange}/>
+        onChange={handleChange}
+        onKeyUp={handleKeyUp}/>
 
       <svg
         className={`Searchbar-close${ (value.length) ? ' is-active' : ''}`}
