@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { IconData } from '../declarations';
 import { Icon } from './Icon';
-import { clamp, debounce } from '../util';
+import { clamp, debounce, isElementInView } from '../util';
 
 interface props {
   icons: IconData[];
@@ -11,7 +11,8 @@ interface props {
 }
 
 export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCursorFocusChange}) => {
-  const listElement = useRef(null);
+  const containerElement = useRef(null);
+  const gridElement = useRef(null);
   const [cursorX, setCursorX] = useState(0);
   const [cursorY, setCursorY] = useState(-1);
   const [rows, setRows] = useState(0);
@@ -71,19 +72,40 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
   const handleKeyDown = debounce((ev) => {
     switch (ev.key) {
       case 'ArrowUp':
+        ev.preventDefault();
         handleArrowUp();
-        break;
+        return false;
       case 'ArrowDown':
+        ev.preventDefault();
         handleArrowDown();
-        break;
+        return false;
       case 'ArrowLeft':
+        ev.preventDefault();
         handleArrowLeft();
-        break;
+        return false;
       case 'ArrowRight':
+        ev.preventDefault();
         handleArrowRight();
-        break;
+        return false;
     }
   }, 4);
+
+  const handleIconSelect = (iconRef) => {
+    const container = containerElement.current;
+    const [isInView, offset] = isElementInView(iconRef, container);
+    const padding = 12;
+
+    if (isInView) {
+      return;
+    }
+
+    if (offset.top < 0) {
+      container.scrollTo(0, container.scrollTop - Math.abs(offset.top) - padding);
+    }
+    else if (offset.bottom < 0) {
+      container.scrollTo(0, container.scrollTop + Math.abs(offset.bottom) + padding);
+    }
+  }
 
   const resetCursor = () => {
     setCursorX(0);
@@ -93,17 +115,17 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
   useEffect(() => {
     onCursorFocusChange(false);
     resetCursor();
-  }, [query])
+  }, [query]);
 
   useEffect(() => {
     if (doCursorFocus === false) {
       resetCursor();
     }
-  }, [doCursorFocus])
+  }, [doCursorFocus]);
 
   useEffect(() => {
-    if (listElement.current) {
-      const gridStyles = window.getComputedStyle(listElement.current);
+    if (gridElement.current) {
+      const gridStyles = window.getComputedStyle(gridElement.current);
       setRows(gridStyles.gridTemplateRows.split(' ').length);
       setColumns(gridStyles.gridTemplateColumns.split(' ').length);
     }
@@ -119,14 +141,17 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
   return (
     <>
       {icons.length
-        ? <div className="IconList" ref={listElement}>
-            {icons.map((icon: IconData, index) => {
-              return <Icon
-                        isSelected={cursorPosition === index}
-                        key={icon.name}
-                        name={icon.name}
-                        type={icon.type} />
-            })}
+        ? <div className="IconList" ref={containerElement}>
+            <div className="IconList-grid" ref={gridElement}>
+              {icons.map((icon: IconData, index) => {
+                return <Icon
+                          onSelected={handleIconSelect}
+                          isSelected={cursorPosition === index}
+                          key={icon.name}
+                          name={icon.name}
+                          type={icon.type} />
+              })}
+            </div>
           </div>
         : <div className="IconList--empty">
             No icons found for "{query}"

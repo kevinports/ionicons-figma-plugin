@@ -34,3 +34,18 @@ export const debounce = (callback:Function, wait:number) => {
     timeout = setTimeout(next, wait);
   }
 }
+
+export const isElementInView: any = (el, view) => {
+  let { top, bottom } = el.getBoundingClientRect();
+  const { top: vTop, height: vHeight } = view.getBoundingClientRect();
+
+  top = top - vTop;
+  bottom = bottom - vTop;
+
+  const isInView = top > 0 && bottom < vHeight;
+  const offset = {
+    top: top,
+    bottom: vHeight - bottom
+  }
+  return [isInView, offset];
+}

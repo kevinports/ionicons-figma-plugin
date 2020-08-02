@@ -1,4 +1,10 @@
 .IconList {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.IconList-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 8px;

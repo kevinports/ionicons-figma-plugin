@@ -5,9 +5,10 @@ interface props {
   name: string;
   type: string;
   isSelected: boolean;
+  onSelected: Function;
 }
 
-export const Icon: React.SFC<props> = ({ name, isSelected }) => {
+export const Icon: React.SFC<props> = ({ name, isSelected, onSelected }) => {
   const element = useRef(null);
 
   const serialize = () => {
@@ -107,12 +108,14 @@ export const Icon: React.SFC<props> = ({ name, isSelected }) => {
   }
 
   useEffect(() => {
-    isSelected && element.current.scrollIntoView({behavior: "smooth", block: "nearest"});
+    if (isSelected) {
+      onSelected(element.current);
+    }
 
     window.addEventListener('keyup', (handleKeyup));
     return () => {
       window.removeEventListener('keyup', handleKeyup);
-    };
+    }
   }, [isSelected]);
 
   useEffect(() => {

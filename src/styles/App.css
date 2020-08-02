@@ -12,5 +12,5 @@
 }
 
 .App-detail {
-  overflow-y: auto;
+  overflow: hidden;
 }
