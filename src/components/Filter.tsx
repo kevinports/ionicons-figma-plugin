@@ -8,10 +8,8 @@ interface props {
 }
 
 export const Filter: React.SFC<props> = ({filters, activeFilter, onChange}) => {
-  const el = useRef(null);
-
   return (
-    <div className="Filter" ref={el}>
+    <div className="Filter">
       {filters.map((filter) => (
         <div
           key={filter}

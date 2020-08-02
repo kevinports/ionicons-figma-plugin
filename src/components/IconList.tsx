@@ -17,34 +17,52 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
   const [rows, setRows] = useState(0);
   const [columns, setColumns] = useState(0);
 
+  let cursorPosition;
+
+  const calcCursorPositon = () => {
+    const newPosition = (cursorY < 0) ? -1 : (cursorX + (cursorY * columns));
+    return clamp(newPosition, -1, icons.length - 1);
+  }
+
+  const clampY = (y) => {
+    return clamp(y, -1, rows - 1);
+  }
+
   const handleArrowUp = () => {
     if (cursorY === 0) {
       onCursorFocusChange(false);
       setCursorX(0);
     }
-    setCursorY(y => clamp(y - 1, -1, rows));
+    setCursorY(y => clampY(y - 1));
   }
 
   const handleArrowDown = () => {
-    if (cursorY === -1) onCursorFocusChange(true);
-    setCursorY(y => clamp(y + 1, 0, rows));
+    if (cursorY === -1)  {
+      onCursorFocusChange(true);
+    }
+    setCursorY(y => clampY(y + 1));
   }
 
   const handleArrowLeft = () => {
-    if (cursorY === -1) return;
-    if (cursorX - 1 <= 0)  {
-      setCursorY(y => clamp(y - 1, 0, rows));
-      setCursorX(columns);
-    } else {
+    if (cursorY === -1 || cursorPosition === 0) {
+      return;
+    }
+    else if (cursorX - 1 < 0)  {
+      setCursorY(y => clampY(y - 1));
+      setCursorX(columns - 1);
+    }
+    else {
       setCursorX(x => x - 1);
     }
   }
 
   const handleArrowRight = () => {
-    if (cursorY == -1) return;
-    if (cursorX + 1 > columns)  {
-      setCursorY(y => clamp(y + 1, 0, rows));
-      setCursorX(1);
+    if (cursorY == -1 || cursorPosition === icons.length -1) {
+      return;
+    }
+    else if (cursorX + 1 >= columns)  {
+      setCursorY(y => clampY(y + 1));
+      setCursorX(0);
     } else {
       setCursorX(x => x + 1);
     }
@@ -53,38 +71,33 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
   const handleKeyDown = debounce((ev) => {
     switch (ev.key) {
       case 'ArrowUp':
-        ev.preventDefault();
-        ev.stopPropagation();
         handleArrowUp();
         break;
       case 'ArrowDown':
-        ev.preventDefault();
-        ev.stopPropagation();
         handleArrowDown();
         break;
       case 'ArrowLeft':
-        ev.preventDefault();
-        ev.stopPropagation();
         handleArrowLeft();
         break;
       case 'ArrowRight':
-        ev.preventDefault();
-        ev.stopPropagation();
         handleArrowRight();
         break;
     }
   }, 4);
 
-  useEffect(() => {
+  const resetCursor = () => {
     setCursorX(0);
     setCursorY(-1);
+  }
+
+  useEffect(() => {
     onCursorFocusChange(false);
+    resetCursor();
   }, [query])
 
   useEffect(() => {
     if (doCursorFocus === false) {
-      setCursorX(0);
-      setCursorY(-1);
+      resetCursor();
     }
   }, [doCursorFocus])
 
@@ -101,13 +114,13 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
     }
   });
 
+  cursorPosition = calcCursorPositon();
+
   return (
     <>
       {icons.length
         ? <div className="IconList" ref={listElement}>
             {icons.map((icon: IconData, index) => {
-              const cursorPosition = (cursorY < 0) ? -1 : (cursorX + (cursorY * columns));
-              console.log
               return <Icon
                         isSelected={cursorPosition === index}
                         key={icon.name}

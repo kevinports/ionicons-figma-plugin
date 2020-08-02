@@ -6,7 +6,7 @@ interface props {
   doInputFocus: boolean;
 }
 
-export const Searchbar: React.SFC<props> = ({ onValueChange, onInputFocusChange, doInputFocus }) => {
+export const SearchBar: React.SFC<props> = ({ onValueChange, onInputFocusChange, doInputFocus }) => {
   const inputElement = useRef(null);
   const [value, setValue] = useState('');
 

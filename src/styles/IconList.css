@@ -2,9 +2,11 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 8px;
+  margin: 12px;
 }
 
 .IconList--empty {
   text-align: center;
   padding-top: 32px;
+  margin: 12px;
 }

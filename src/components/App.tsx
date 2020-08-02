@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconData, FilterType } from '../declarations';
-import { Filter, IconList, Searchbar } from './index';
+import { Filter, IconList, SearchBar } from './index';
 import data from '../data';
 
 export const App = () => {
@@ -34,7 +34,8 @@ export const App = () => {
           filters={filters}
           activeFilter={activeFilter}
           onChange={(filter:FilterType) => setActiveFilter(filter)} />
-        <Searchbar
+
+        <SearchBar
           doInputFocus={isInputFocused}
           onInputFocusChange={handleInputFocusChange}
           onValueChange={(value:string) => setQuery(value)} />

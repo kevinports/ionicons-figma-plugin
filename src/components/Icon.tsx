@@ -8,7 +8,7 @@ interface props {
 }
 
 export const Icon: React.SFC<props> = ({ name, isSelected }) => {
-  const el = useRef(null);
+  const element = useRef(null);
 
   const serialize = () => {
     const srcDim = 512;
@@ -101,7 +101,14 @@ export const Icon: React.SFC<props> = ({ name, isSelected }) => {
     }
   }
 
+  const handleClick = (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
   useEffect(() => {
+    isSelected && element.current.scrollIntoView({behavior: "smooth", block: "nearest"});
+
     window.addEventListener('keyup', (handleKeyup));
     return () => {
       window.removeEventListener('keyup', handleKeyup);
@@ -109,17 +116,22 @@ export const Icon: React.SFC<props> = ({ name, isSelected }) => {
   }, [isSelected]);
 
   useEffect(() => {
-    el.current.addEventListener('dragstart', handleDragStart);
-    el.current.addEventListener('dragend', handleDragEnd);
+    element.current.addEventListener('dragstart', handleDragStart);
+    element.current.addEventListener('dragend', handleDragEnd);
     return () => {
-      el.current.removeEventListener('dragstart', handleDragStart);
-      el.current.removeEventListener('dragend', handleDragEnd);
+      element.current.removeEventListener('dragstart', handleDragStart);
+      element.current.removeEventListener('dragend', handleDragEnd);
     };
   })
 
   return (
     <div className={`Icon${isSelected ? ' is-selected' : ''}`}>
-      <div className="Icon-handler" ref={el} onDoubleClick={handleSelect} draggable="true">
+      <div
+        className="Icon-handler"
+        ref={element}
+        onClick={handleClick}
+        onDoubleClick={handleSelect}
+        draggable="true">
         <svg>
           <use xlinkHref={`#${name}`}/>
         </svg>
