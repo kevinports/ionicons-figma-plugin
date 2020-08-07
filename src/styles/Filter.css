@@ -4,14 +4,19 @@
 }
 
 .Filter-item {
+  transition: 0.2s color;
   text-transform: capitalize;
   font-weight: 500;
   color: var(--text-light);
   cursor: pointer;
 }
 
+.Filter-item:hover,
 .Filter-item.is-active {
   color: var(--text-dark);
+}
+
+.Filter-item.is-active {
   pointer-events: none;
 }
 

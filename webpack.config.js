@@ -42,13 +42,13 @@ module.exports = (env, argv) => ({
       inlineSource: '.(js)$',
       chunks: ['ui'],
     }),
-    new CopyWebpackPlugin({
-      patterns: [{
-        from: 'node_modules/ionicons/dist/svg/*.svg',
-        to: 'svg',
-        flatten: true
-      }]
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [{
+    //     from: 'node_modules/ionicons/dist/svg/*.svg',
+    //     to: 'svg',
+    //     flatten: true
+    //   }]
+    // }),
     new HtmlWebpackInlineSourcePlugin()
   ]
 });

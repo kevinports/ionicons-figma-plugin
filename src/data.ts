@@ -1,13 +1,13 @@
 import { IconData } from "./declarations";
 import iconData from 'ionicons/dist/ionicons.json';
-import { getVariant, removeVariant } from "./util";
+import { getVariant, removeVariant, processSvg } from "./util";
 
 const data: IconData[] = (() => {
   const indexDict = {};
   let uiIconIndex = 0;
   let logoIconIndex = 0;
 
-  iconData.icons.forEach((icon) => {
+  iconData.icons.forEach(async (icon) => {
     if (!icon.name.includes('-outline') && !icon.name.includes('-sharp') && !icon.name.includes('logo-')) {
       indexDict[icon.name] = uiIconIndex;
       uiIconIndex++;
@@ -19,9 +19,11 @@ const data: IconData[] = (() => {
   });
 
   return iconData.icons.map((icon) => {
+    const srcSvg = require(`ionicons/dist/svg/${icon.name}.svg`);
     return {
       index: indexDict[removeVariant(icon.name)],
       type: getVariant(icon.name),
+      svg: processSvg(srcSvg),
       ...icon
     }
   });

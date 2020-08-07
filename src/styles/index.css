@@ -2,8 +2,10 @@
   --border-default: #E5E5E5;
   --border-focus: #27A2F8;
   --bg-highlight: #F0F0F0;
-  --text-dark: #001A3A;
-  --text-light: #92A0B3;
+  --text-dark: rgba(0, 0, 0, 0.8);
+  --text-light: rgba(0, 0, 0, 0.3);
+  --icon-dark: #000;
+  --icon-light: #6F6F6F;
 }
 
 body {
