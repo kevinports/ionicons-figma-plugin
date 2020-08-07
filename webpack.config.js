@@ -1,6 +1,7 @@
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 module.exports = (env, argv) => ({
   watch: true,
@@ -12,7 +13,7 @@ module.exports = (env, argv) => ({
 
   entry: {
     ui: './src/ui.tsx',
-    plugin: './src/plugin.ts',
+    plugin: './src/plugin.ts'
   },
 
   module: {
@@ -24,17 +25,16 @@ module.exports = (env, argv) => ({
       { test: /\.(png|jpg|gif|webp|zip)$/, loader: [{ loader: 'url-loader' }] },
 
       { test: /\.svg$/, loader: [{ loader: 'svg-inline-loader' }] },
-    ],
+    ]
   },
 
   resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
 
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
 
-  // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/ui.html',
@@ -42,6 +42,13 @@ module.exports = (env, argv) => ({
       inlineSource: '.(js)$',
       chunks: ['ui'],
     }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: 'node_modules/ionicons/dist/svg/*.svg',
+        to: 'svg',
+        flatten: true
+      }]
+    }),
     new HtmlWebpackInlineSourcePlugin()
-  ],
-})
+  ]
+});

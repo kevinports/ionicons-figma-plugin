@@ -18,6 +18,8 @@ figma.ui.onmessage = (msg:Message) => {
       selection.parent.insertChild(0, node);
     }
     else {
+      node.x = figma.viewport.center.x
+      node.y = figma.viewport.center.y
       figma.currentPage.insertChild(0, node);
     }
 
@@ -26,6 +28,7 @@ figma.ui.onmessage = (msg:Message) => {
 
   if (msg.type === 'dropInsert') {
     const { iconName, serialized, dropPosition, windowSize, offset } = msg.data;
+    console.log(serialized)
     const node = figma.createNodeFromSvg(serialized);
     node.name = `ionicon-${iconName}`;
 
