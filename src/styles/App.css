@@ -3,6 +3,8 @@
   grid-auto-flow: row;
   grid-template-rows: auto 1fr;
   height: 100vh;
+  font-family: Inter;
+  font-size: 11px;
 }
 
 .App-control {

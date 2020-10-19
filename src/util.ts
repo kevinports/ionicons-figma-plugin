@@ -22,6 +22,42 @@ export const removeVariant = (name:string) => {
   return res;
 }
 
+export const processSvg = (svg: string) => {
+  const srcDim = 512;
+  const targetDim = 24;
+
+  const targetStrokeWidth = 1.25;
+  const calcStrokeWidth = (targetStrokeWidth * (srcDim / targetDim)).toFixed(2).toString();
+
+  const parsedSvg = new DOMParser()
+    .parseFromString(svg, 'image/svg+xml')
+    .querySelector('svg');
+
+  parsedSvg.setAttribute('height', `${targetDim}px`);
+  parsedSvg.setAttribute('width', `${targetDim}px`);
+
+  const walker = walkTree(parsedSvg);
+  let res;
+  while (!(res = walker.next()).done) {
+    const node = res.value;
+    if (node.hasAttribute('stroke-width')) {
+      parsedSvg.setAttribute('stroke-width', `${calcStrokeWidth}px`);
+    }
+  }
+
+  return new XMLSerializer().serializeToString(parsedSvg);
+}
+
+function* walkTree(node) {
+	yield node;
+	let children = node.children;
+	if (children) {
+		for (let child of children) {
+			yield* walkTree(child);
+		}
+	}
+}
+
 export const clamp = (val:number, min:number, max:number) => {
   return val > max ? max : val < min ? min : val;
 }

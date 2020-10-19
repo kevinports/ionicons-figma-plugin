@@ -1,6 +1,6 @@
 import { IconData } from "./declarations";
 import iconData from 'ionicons/dist/ionicons.json';
-import { getVariant, removeVariant } from "./util";
+import { getVariant, removeVariant, processSvg } from "./util";
 
 const data: IconData[] = (() => {
   const indexDict = {};
@@ -19,9 +19,11 @@ const data: IconData[] = (() => {
   });
 
   return iconData.icons.map((icon) => {
+    const srcSvg = require(`ionicons/dist/svg/${icon.name}.svg`);
     return {
       index: indexDict[removeVariant(icon.name)],
       type: getVariant(icon.name),
+      svg: processSvg(srcSvg),
       ...icon
     }
   });

@@ -147,9 +147,8 @@ export const IconList: React.SFC<props> = ({icons, query, doCursorFocus, onCurso
                 return <Icon
                           onSelected={handleIconSelect}
                           isSelected={cursorPosition === index}
-                          key={icon.name}
-                          name={icon.name}
-                          type={icon.type} />
+                          key={index + icon.name}
+                          icon={icon}/>
               })}
             </div>
           </div>
