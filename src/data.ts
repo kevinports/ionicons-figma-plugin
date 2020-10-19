@@ -7,7 +7,7 @@ const data: IconData[] = (() => {
   let uiIconIndex = 0;
   let logoIconIndex = 0;
 
-  iconData.icons.forEach(async (icon) => {
+  iconData.icons.forEach((icon) => {
     if (!icon.name.includes('-outline') && !icon.name.includes('-sharp') && !icon.name.includes('logo-')) {
       indexDict[icon.name] = uiIconIndex;
       uiIconIndex++;
